@@ -41,6 +41,11 @@ authController.post('/login', async (req, res) => {
         
         res.render('auth/login', { title: 'Login Page', email });
     }
+});
+
+authController.get('/logout', (req, res) => {
+    res.clearCookie(AUTH_COOKIE_NAME);
+    res.redirect('/');
 })
 
 export default authController;
