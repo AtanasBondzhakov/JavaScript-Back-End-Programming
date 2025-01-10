@@ -9,5 +9,8 @@ export const stoneService = {
     },
     getOne(stoneId) {
         return Stone.findById(stoneId);
+    },
+    remove(stoneId) {
+        return Stone.findByIdAndDelete(stoneId);
     }
 }

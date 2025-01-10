@@ -10,7 +10,7 @@ authController.get('/register', isGuest, (req, res) => {
     res.render('auth/register', { title: 'Register Page' });
 });
 
-authController.post('/register', async (req, res) => {
+authController.post('/register', isGuest, async (req, res) => {
     const { email, password, rePassword } = req.body;
 
     try {
@@ -20,6 +20,8 @@ authController.post('/register', async (req, res) => {
         res.redirect('/');
     } catch (err) {
         //TODO error handling
+        console.log(err);
+
         res.render('auth.register', { title: 'Register Page', email })
     }
 });
@@ -28,7 +30,7 @@ authController.get('/login', isGuest, (req, res) => {
     res.render('auth/login', { title: 'Login Page' });
 });
 
-authController.post('/login', async (req, res) => {
+authController.post('/login', isGuest, async (req, res) => {
     const { email, password } = req.body;
 
     try {

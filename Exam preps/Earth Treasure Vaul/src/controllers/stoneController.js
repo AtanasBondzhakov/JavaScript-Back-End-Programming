@@ -9,7 +9,7 @@ stoneController.get('/create', isAuth, (req, res) => {
     res.render('stones/create', { title: 'Create Page' });
 });
 
-stoneController.post('/create', async (req, res) => {
+stoneController.post('/create', isAuth, async (req, res) => {
     const stoneData = req.body;
     const ownerId = req.user._id;
 
@@ -44,9 +44,36 @@ stoneController.get('/:stoneId/details', async (req, res) => {
     } catch (error) {
         //TODO error
     }
+});
 
-})
+stoneController.get('/:stoneId/delete', isAuth, async (req, res) => {
+    const stoneId = req.params.stoneId;
 
+    if (!await isStoneOwner(stoneId, req.user?._id)) {
+        return res.redirect('/404');
+    }
 
+    try {
+        await stoneService.remove(stoneId);
+
+        res.redirect('/');
+    } catch (err) {
+        //TODO err
+        console.log(err);
+    }
+});
+
+async function isStoneOwner(stoneId, userId) {
+    try {
+        const stone = await stoneService.getOne(stoneId);
+        const isOwner = stone.owner == userId;
+    } catch (err) {
+        //TODO error
+        console.log(err);
+        
+    }
+
+    return isOwner;
+}
 
 export default stoneController;
