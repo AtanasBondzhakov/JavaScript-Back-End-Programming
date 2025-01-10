@@ -13,6 +13,9 @@ export const authMiddleware = async (req, res, next) => {
         req.user = decodedToken;
         req.isAuthenticated = true;
 
+        req.locals.user = decodedToken;
+        req.locals.isAuthenticated = true;
+
         next();
     } catch (error) {
         res.clearCookie(AUTH_COOKIE_NAME);
@@ -21,7 +24,7 @@ export const authMiddleware = async (req, res, next) => {
     }
 }
 
-export const isAuth =  async (req, res, next) => {
+export const isAuth = async (req, res, next) => {
     if (!req.user) {
         res.redirect('/auth/login');
     }
