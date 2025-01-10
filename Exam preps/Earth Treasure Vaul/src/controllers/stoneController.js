@@ -46,15 +46,9 @@ stoneController.get('/:stoneId/details', async (req, res) => {
     }
 });
 
-stoneController.get('/:stoneId/delete', isAuth, async (req, res) => {
-    const stoneId = req.params.stoneId;
-
-    if (!await isStoneOwner(stoneId, req.user?._id)) {
-        return res.redirect('/404');
-    }
-
+stoneController.get('/:stoneId/delete', isStoneOwner, async (req, res) => {
     try {
-        await stoneService.remove(stoneId);
+        await stoneService.remove(req.params.stoneId);
 
         res.redirect('/');
     } catch (err) {
@@ -63,17 +57,14 @@ stoneController.get('/:stoneId/delete', isAuth, async (req, res) => {
     }
 });
 
-async function isStoneOwner(stoneId, userId) {
-    try {
-        const stone = await stoneService.getOne(stoneId);
-        const isOwner = stone.owner == userId;
-    } catch (err) {
-        //TODO error
-        console.log(err);
-        
+async function isStoneOwner(req, res, next) {
+    const stone = await stoneService.getOne(req.params.stoneId);
+
+    if (stone.owner == req.user?._id) {
+        return next();
     }
 
-    return isOwner;
-}
+    res.redirect('/404');
+};
 
 export default stoneController;
