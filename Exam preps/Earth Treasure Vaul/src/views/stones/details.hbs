@@ -35,8 +35,12 @@
             <a href="/stones/{{stone._id}}/edit" id="edit-btn">Edit</a>
             <a href="/stones/{{stone._id}}/delete" id="delete-btn">Delete</a>
             {{else}}
-            <a href="#" id="like-btn">Like</a>
+
+            {{#if isLiked}}
             <p id="already-liked">You already liked this stone!</p>
+            {{else}}
+            <a href="/stones/{{stone._id}}/like" id="like-btn">Like</a>
+            {{/if}}
             {{/if}}
         </div>
         {{/if}}

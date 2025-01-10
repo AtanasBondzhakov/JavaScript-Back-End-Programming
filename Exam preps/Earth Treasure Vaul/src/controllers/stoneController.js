@@ -38,9 +38,10 @@ stoneController.get('/dashboard', async (req, res) => {
 stoneController.get('/:stoneId/details', async (req, res) => {
     try {
         const stone = await stoneService.getOne(req.params.stoneId).lean();
-        const isOwner = stone.owner == req.user?._id
+        const isOwner = stone.owner == req.user?._id;
+        const isLiked = stone.likedList.some(userId => userId == req.user._id);
 
-        res.render('stones/details', { title: 'Details Page', stone, isOwner })
+        res.render('stones/details', { title: 'Details Page', stone, isOwner, isLiked })
     } catch (error) {
         //TODO error
     }
@@ -68,13 +69,28 @@ stoneController.post('/:stoneId/edit', async (req, res) => {
 
     try {
         await stoneService.edit(stoneId, stoneData);
-        
+
         res.redirect(`/stones/${stoneId}/details`)
+
+    } catch (err) {
+        //TODO error
+    }
+});
+
+stoneController.get('/:stoneId/like', isAuth, async (req, res) => {
+    const stoneId = req.params.stoneId;
+    const userId = req.user._id;
+
+    try {
+        await stoneService.like(stoneId, userId);
+
+        res.redirect(`/stones/${stoneId}/details`);
 
     } catch (err) {
 
     }
 })
+
 
 async function isStoneOwner(req, res, next) {
     const stone = await stoneService.getOne(req.params.stoneId);

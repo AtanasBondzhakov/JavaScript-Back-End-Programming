@@ -17,6 +17,9 @@ export const stoneService = {
         return Stone.findByIdAndUpdate(stoneId, stoneData);
     },
     lastThree() {
-        return Stone.find().sort({createdAt: -1}).limit(3);
+        return Stone.find().sort({ createdAt: -1 }).limit(3);
+    },
+    like(stoneId, userId) {
+        return Stone.findByIdAndUpdate(stoneId, { $push: { likedList: userId } });
     }
 }
