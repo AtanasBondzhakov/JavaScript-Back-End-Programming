@@ -57,6 +57,25 @@ stoneController.get('/:stoneId/delete', isStoneOwner, async (req, res) => {
     }
 });
 
+stoneController.get('/:stoneId/edit', isStoneOwner, async (req, res) => {
+    const stone = await stoneService.getOne(req.params.stoneId).lean();
+    res.render('stones/edit', { title: 'Edit Page', stone });
+});
+
+stoneController.post('/:stoneId/edit', async (req, res) => {
+    const stoneId = req.params.stoneId;
+    const stoneData = req.body;
+
+    try {
+        await stoneService.edit(stoneId, stoneData);
+        
+        res.redirect(`/stones/${stoneId}/details`)
+
+    } catch (err) {
+
+    }
+})
+
 async function isStoneOwner(req, res, next) {
     const stone = await stoneService.getOne(req.params.stoneId);
 

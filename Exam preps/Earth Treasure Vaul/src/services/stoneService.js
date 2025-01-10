@@ -12,5 +12,11 @@ export const stoneService = {
     },
     remove(stoneId) {
         return Stone.findByIdAndDelete(stoneId);
+    },
+    edit(stoneId, stoneData) {
+        return Stone.findByIdAndUpdate(stoneId, stoneData);
+    },
+    lastThree() {
+        return Stone.find().sort({createdAt: -1}).limit(3);
     }
 }

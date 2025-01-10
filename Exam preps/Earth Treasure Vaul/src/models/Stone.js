@@ -37,7 +37,7 @@ const stoneSchema = new Schema({
         type: Types.ObjectId,
         ref: 'User'
     }
-});
+}, {timestamps: true});
 
 const Stone = model('Stone', stoneSchema);
 

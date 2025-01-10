@@ -1,9 +1,12 @@
 import { Router } from "express";
 
+import { stoneService } from "../services/stoneService.js";
+
 const homeController = Router();
 
-homeController.get('/', (req, res) => {
-    res.render('home', {title: 'Home Page'});
+homeController.get('/', async (req, res) => {
+    const stones = await stoneService.lastThree().lean();
+    res.render('home', {title: 'Home Page', stones});
 });
 
 export default homeController;

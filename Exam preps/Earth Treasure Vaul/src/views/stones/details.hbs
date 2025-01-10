@@ -32,7 +32,7 @@
         {{#if isAuthenticated}}
         <div id="action-buttons">
             {{#if isOwner}}
-            <a href="#" id="edit-btn">Edit</a>
+            <a href="/stones/{{stone._id}}/edit" id="edit-btn">Edit</a>
             <a href="/stones/{{stone._id}}/delete" id="delete-btn">Delete</a>
             {{else}}
             <a href="#" id="like-btn">Like</a>
