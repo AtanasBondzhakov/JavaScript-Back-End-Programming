@@ -26,15 +26,26 @@ stoneController.post('/create', async (req, res) => {
 stoneController.get('/dashboard', async (req, res) => {
     try {
         const stones = await stoneService.getAll().lean();
-        
+
         res.render('stones/dashboard', { title: 'Dashboard Page', stones });
     } catch (err) {
         //TODO error
 
         res.render('stones/dashboard', { title: 'Dashboard Page' });
     }
-
 });
+
+stoneController.get('/:stoneId/details', async (req, res) => {
+    try {
+        const stone = await stoneService.getOne(req.params.stoneId).lean();
+        const isOwner = stone.owner == req.user?._id
+
+        res.render('stones/details', { title: 'Details Page', stone, isOwner })
+    } catch (error) {
+        //TODO error
+    }
+
+})
 
 
 

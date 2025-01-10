@@ -13,8 +13,8 @@ export const authMiddleware = async (req, res, next) => {
         req.user = decodedToken;
         req.isAuthenticated = true;
 
-        req.locals.user = decodedToken;
-        req.locals.isAuthenticated = true;
+        res.locals.user = decodedToken;
+        res.locals.isAuthenticated = true;
 
         next();
     } catch (error) {
