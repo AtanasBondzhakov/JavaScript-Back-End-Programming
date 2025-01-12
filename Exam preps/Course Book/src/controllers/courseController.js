@@ -23,4 +23,10 @@ courseController.post('/create', isAuth, async (req, res) => {
     }
 });
 
+courseController.get('/all-courses', async (req, res) => {
+    const courses = await courseService.getAll().lean();
+
+    res.render('courses/catalog', {title: 'Catalog Page', courses});
+});
+
 export default courseController;

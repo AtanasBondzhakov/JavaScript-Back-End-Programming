@@ -6,5 +6,8 @@ export const courseService = {
     },
     lastThree() {
         return Course.find().sort({ createdAt: -1 }).limit(3);
+    },
+    getAll() {
+        return Course.find();
     }
 };
