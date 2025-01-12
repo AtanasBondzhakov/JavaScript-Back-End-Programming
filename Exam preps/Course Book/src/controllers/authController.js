@@ -20,7 +20,6 @@ authController.post('/register', async (req, res) => {
 
         res.redirect('/');
 
-        //TODO error handling
     } catch (err) {
         const error = getErrorMessage(err);
         res.render('auth/register', { title: 'Register Page', username, email, error });

@@ -20,8 +20,6 @@ export const authService = {
         const newUser = await User.create({ username, email, password });
 
         return this.generateToken(newUser);
-
-
     },
     async login(email, password) {
         const user = await User.findOne({ email });
