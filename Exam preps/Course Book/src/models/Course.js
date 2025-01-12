@@ -33,7 +33,7 @@ const courseSchema = new Schema({
         type: Types.ObjectId,
         ref: 'User'
     }
-});
+}, { timestamps: true });
 
 const Course = model('Course', courseSchema);
 
