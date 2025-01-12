@@ -19,7 +19,6 @@ authController.post('/register', async (req, res) => {
         res.cookie(AUTH_COOKIE_NAME, token, { httpOnly: true });
 
         res.redirect('/');
-
     } catch (err) {
         const error = getErrorMessage(err);
         res.render('auth/register', { title: 'Register Page', username, email, error });
@@ -39,8 +38,6 @@ authController.post('/login', async (req, res) => {
         res.cookie(AUTH_COOKIE_NAME, token, { httpOnly: true });
 
         res.redirect('/');
-
-        //TODO error handling
     } catch (err) {
         const error = getErrorMessage(err);
         res.render('auth/login', { title: 'Login Page', email, error });
