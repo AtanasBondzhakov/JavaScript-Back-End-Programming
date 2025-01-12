@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { isAuth } from "../middlewares/authMiddleware.js";
 import { stoneService } from "../services/stoneService.js";
+import { getErrorMessage } from "../utils/errorUtils.js";
 
 const stoneController = Router();
 
@@ -18,8 +19,9 @@ stoneController.post('/create', isAuth, async (req, res) => {
 
         res.redirect('/stones/dashboard')
     } catch (err) {
-        //TODO error
-        res.render('stones/create', { title: 'Create Page', stone: stoneData })
+        const error = getErrorMessage(err);
+
+        res.render('stones/create', { title: 'Create Page', stone: stoneData, error })
     }
 });
 
@@ -29,9 +31,9 @@ stoneController.get('/dashboard', async (req, res) => {
 
         res.render('stones/dashboard', { title: 'Dashboard Page', stones });
     } catch (err) {
-        //TODO error
+        const error = getErrorMessage(err);
 
-        res.render('stones/dashboard', { title: 'Dashboard Page' });
+        res.render('stones/dashboard', { title: 'Dashboard Page', err });
     }
 });
 
@@ -89,7 +91,8 @@ stoneController.get('/:stoneId/like', isAuth, async (req, res) => {
     } catch (err) {
 
     }
-})
+});
+
 
 
 async function isStoneOwner(req, res, next) {
