@@ -38,15 +38,11 @@ stoneController.get('/dashboard', async (req, res) => {
 });
 
 stoneController.get('/:stoneId/details', async (req, res) => {
-    try {
-        const stone = await stoneService.getOne(req.params.stoneId).lean();
-        const isOwner = stone.owner == req.user?._id;
-        const isLiked = stone.likedList.some(userId => userId == req.user._id);
+    const stone = await stoneService.getOne(req.params.stoneId).lean();
+    const isOwner = stone.owner == req.user?._id;
+    const isLiked = stone.likedList.some(userId => userId == req.user._id);
 
-        res.render('stones/details', { title: 'Details Page', stone, isOwner, isLiked })
-    } catch (error) {
-        //TODO error
-    }
+    res.render('stones/details', { title: 'Details Page', stone, isOwner, isLiked })
 });
 
 stoneController.get('/:stoneId/delete', isStoneOwner, async (req, res) => {
@@ -55,8 +51,8 @@ stoneController.get('/:stoneId/delete', isStoneOwner, async (req, res) => {
 
         res.redirect('/');
     } catch (err) {
-        //TODO err
-        console.log(err);
+        const error = getErrorMessage(err);
+        res.render('404', { title: 'Edit Page', error });
     }
 });
 
@@ -75,7 +71,8 @@ stoneController.post('/:stoneId/edit', async (req, res) => {
         res.redirect(`/stones/${stoneId}/details`)
 
     } catch (err) {
-        //TODO error
+        const error = getErrorMessage(err);
+        res.render('stone/edit', { title: 'Edit Page', error });
     }
 });
 
@@ -83,17 +80,22 @@ stoneController.get('/:stoneId/like', isAuth, async (req, res) => {
     const stoneId = req.params.stoneId;
     const userId = req.user._id;
 
-    try {
-        await stoneService.like(stoneId, userId);
+    await stoneService.like(stoneId, userId);
 
-        res.redirect(`/stones/${stoneId}/details`);
-
-    } catch (err) {
-
-    }
+    res.redirect(`/stones/${stoneId}/details`);
 });
 
+stoneController.get('/search', async (req, res) => {
+    const query = req.query.search;
 
+    let stones = await stoneService.search(query);
+
+    if (stones == undefined) {
+        stones = await stoneService.getAll().lean();
+    }
+
+    res.render('stones/search', { title: 'Search Page', stones });
+});
 
 async function isStoneOwner(req, res, next) {
     const stone = await stoneService.getOne(req.params.stoneId);

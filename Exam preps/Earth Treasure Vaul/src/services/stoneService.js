@@ -21,5 +21,10 @@ export const stoneService = {
     },
     like(stoneId, userId) {
         return Stone.findByIdAndUpdate(stoneId, { $push: { likedList: userId } });
+    },
+    search(query) {
+        if (query) {
+            return Stone.find({ name: { $regex: query, $options: 'i' } }).lean();
+        }
     }
 }
