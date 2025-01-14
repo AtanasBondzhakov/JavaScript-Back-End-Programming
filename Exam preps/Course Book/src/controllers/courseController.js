@@ -36,7 +36,7 @@ courseController.get('/:courseId/details', async (req, res) => {
 
     const isOwner = req.user?._id == course.owner;
     const isSignedUp = course.signUpList.some(user => user._id == req.user?._id);
-    
+
     const signedList = await Promise.all(course.signUpList.map(async userId => {
         const user = await courseService.getUser(userId);
         return user.username;
@@ -60,7 +60,25 @@ courseController.get('/:courseId/sign-up', async (req, res) => {
     await courseService.signUp(courseId, userId);
 
     res.redirect(`/courses/${courseId}/details`);
-})
+});
+
+courseController.get('/:courseId/delete', isCourseOwner, async (req, res) => {
+    const courseId = req.params.courseId;
+
+    await courseService.remove(courseId);
+
+    res.redirect('/courses/all-courses')
+});
+
+async function isCourseOwner(req, res, next) {
+    const course = await courseService.getOne(req.params.courseId);
+
+    if (course.owner == req.user?._id){
+        return next();
+    }
+
+    res.redirect('/404');
+}
 
 
 export default courseController;

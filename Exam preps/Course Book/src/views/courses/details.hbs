@@ -26,7 +26,7 @@
 
         {{#if isOwner}}
         <a href="#">Edit</a>
-        <a href="#">Delete</a>
+        <a href="/courses/{{course._id}}/delete">Delete</a>
         {{else}}
         <!-- logged in user who has not yet sign up for the course-->
         {{#if isSignedUp}}
