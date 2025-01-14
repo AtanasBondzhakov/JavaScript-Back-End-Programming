@@ -27,6 +27,12 @@ export const courseService = {
         return Course.findByIdAndDelete(courseId);
     },
     edit(courseId, courseData) {
-        return Course.findByIdAndUpdate(courseId, courseData, {runValidators: true});
+        return Course.findByIdAndUpdate(courseId, courseData, { runValidators: true });
+    },
+    getCreatedCourses(userId) {
+        return Course.find({ owner: userId });
+    },
+    getSignedUp(userId) {
+        return Course.find({signUpList: userId})
     }
 };
