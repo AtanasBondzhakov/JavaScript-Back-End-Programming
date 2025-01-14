@@ -1,4 +1,5 @@
 import Course from "../models/Course.js";
+import User from "../models/User.js";
 
 export const courseService = {
     create(courseData, ownerId) {
@@ -9,5 +10,17 @@ export const courseService = {
     },
     getAll() {
         return Course.find();
+    },
+    getOne(courseId) {
+        return Course.findById(courseId);
+    },
+    getOwner(ownerId) {
+        return User.findById(ownerId);
+    },
+    signUp(courseId, userId) {
+        return Course.findByIdAndUpdate(courseId, { $push: {signUpList: userId}});
+    },
+    getUser(userId) {
+        return User.findById(userId);
     }
 };

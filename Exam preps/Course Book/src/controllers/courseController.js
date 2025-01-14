@@ -26,7 +26,41 @@ courseController.post('/create', isAuth, async (req, res) => {
 courseController.get('/all-courses', async (req, res) => {
     const courses = await courseService.getAll().lean();
 
-    res.render('courses/catalog', {title: 'Catalog Page', courses});
+    res.render('courses/catalog', { title: 'Catalog Page', courses });
 });
+
+courseController.get('/:courseId/details', async (req, res) => {
+    const courseId = req.params.courseId;
+    const course = await courseService.getOne(courseId).lean();
+    const owner = await courseService.getOwner(course.owner);
+
+    const isOwner = req.user?._id == course.owner;
+    const isSignedUp = course.signUpList.some(user => user._id == req.user?._id);
+    
+    const signedList = await Promise.all(course.signUpList.map(async userId => {
+        const user = await courseService.getUser(userId);
+        return user.username;
+    }));
+
+
+    res.render('courses/details', {
+        title: 'Details Page',
+        course,
+        owner: owner.email,
+        isOwner,
+        isSignedUp,
+        signedList: signedList.join(', ')
+    });
+});
+
+courseController.get('/:courseId/sign-up', async (req, res) => {
+    const courseId = req.params.courseId;
+    const userId = req.user?._id
+
+    await courseService.signUp(courseId, userId);
+
+    res.redirect(`/courses/${courseId}/details`);
+})
+
 
 export default courseController;
