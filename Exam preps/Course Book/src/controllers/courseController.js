@@ -19,41 +19,50 @@ courseController.post('/create', isAuth, async (req, res) => {
 
         res.redirect('/courses/all-courses');
     } catch (err) {
-        res.render('courses/create', { title: 'Create Page', error: getErrorMessage(err) });
+        res.render('courses/create', { title: 'Create Page', error: getErrorMessage(err), course: courseData });
     }
 });
 
 courseController.get('/all-courses', async (req, res) => {
-    const courses = await courseService.getAll().lean();
+    try {
+        const courses = await courseService.getAll().lean();
 
-    res.render('courses/catalog', { title: 'Catalog Page', courses });
+        res.render('courses/catalog', { title: 'Catalog Page', courses });
+    } catch (err) {
+        res.render('courses/catalog', { title: 'Catalog Page', error: getErrorMessage(err) });
+    }
 });
 
 courseController.get('/:courseId/details', async (req, res) => {
     const courseId = req.params.courseId;
-    const course = await courseService.getOne(courseId).lean();
-    const owner = await courseService.getOwner(course.owner);
 
-    const isOwner = req.user?._id == course.owner;
-    const isSignedUp = course.signUpList.some(user => user._id == req.user?._id);
+    try {
+        const course = await courseService.getOne(courseId).lean();
+        const owner = await courseService.getOwner(course.owner);
 
-    const signedList = await Promise.all(course.signUpList.map(async userId => {
-        const user = await courseService.getUser(userId);
-        return user.username;
-    }));
+        const isOwner = req.user?._id == course.owner;
+        const isSignedUp = course.signUpList.some(user => user._id == req.user?._id);
 
+        const signedList = await Promise.all(course.signUpList.map(async userId => {
+            const user = await courseService.getUser(userId);
+            return user.username;
+        }));
 
-    res.render('courses/details', {
-        title: 'Details Page',
-        course,
-        owner: owner.email,
-        isOwner,
-        isSignedUp,
-        signedList: signedList.join(', ')
-    });
+        res.render('courses/details', {
+            title: 'Details Page',
+            course,
+            owner: owner.email,
+            isOwner,
+            isSignedUp,
+            signedList: signedList.join(', ')
+        });
+    } catch (err) {
+        res.render('course/catalog', { title: 'Catalog Page', error: getErrorMessage(err) });
+    }
+
 });
 
-courseController.get('/:courseId/sign-up', async (req, res) => {
+courseController.get('/:courseId/sign-up', isAuth, async (req, res) => {
     const courseId = req.params.courseId;
     const userId = req.user?._id
 
@@ -65,21 +74,36 @@ courseController.get('/:courseId/sign-up', async (req, res) => {
 courseController.get('/:courseId/delete', isCourseOwner, async (req, res) => {
     const courseId = req.params.courseId;
 
-    await courseService.remove(courseId);
+    try {
+        await courseService.remove(courseId);
 
-    res.redirect('/courses/all-courses')
+        res.redirect('/courses/all-courses');
+    } catch (err) {
+        res.render('courses/catalog', { title: 'Catalog Page', error: getErrorMessage(err) });
+    }
 });
 
-courseController.get('/:courseId/edit', async (req, res) => {
-    const course = await courseService.getOne(req.params.courseId).lean();
-    res.render('courses/edit', { title: 'Edit Page', course });
+courseController.get('/:courseId/edit', isCourseOwner, async (req, res) => {
+    try {
+        const course = await courseService.getOne(req.params.courseId).lean();
+
+        res.render('courses/edit', { title: 'Edit Page', course });
+    } catch (err) {
+        res.render('courses/catalog', { title: 'Catalog Page', error: getErrorMessage(err) });
+    }
 });
 
-courseController.post('/:courseId/edit', async (req, res) => {
+courseController.post('/:courseId/edit', isCourseOwner, async (req, res) => {
     const courseId = req.params.courseId;
     const courseData = req.body;
-    await courseService.edit(courseId, courseData);
-    res.redirect(`/courses/${courseId}/details`);
+
+    try {
+        await courseService.edit(courseId, courseData);
+
+        res.redirect(`/courses/${courseId}/details`);
+    } catch (err) {
+        res.render('courses/edit', { title: 'Edit Page', error: getErrorMessage(err), course: courseData });
+    }
 })
 
 async function isCourseOwner(req, res, next) {

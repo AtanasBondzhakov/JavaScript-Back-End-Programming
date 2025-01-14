@@ -18,7 +18,7 @@ export const courseService = {
         return User.findById(ownerId);
     },
     signUp(courseId, userId) {
-        return Course.findByIdAndUpdate(courseId, { $push: {signUpList: userId}});
+        return Course.findByIdAndUpdate(courseId, { $push: { signUpList: userId } });
     },
     getUser(userId) {
         return User.findById(userId);
@@ -27,6 +27,6 @@ export const courseService = {
         return Course.findByIdAndDelete(courseId);
     },
     edit(courseId, courseData) {
-        return Course.findByIdAndUpdate(courseId, courseData);
+        return Course.findByIdAndUpdate(courseId, courseData, {runValidators: true});
     }
 };
