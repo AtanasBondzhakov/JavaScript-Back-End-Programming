@@ -70,10 +70,22 @@ courseController.get('/:courseId/delete', isCourseOwner, async (req, res) => {
     res.redirect('/courses/all-courses')
 });
 
+courseController.get('/:courseId/edit', async (req, res) => {
+    const course = await courseService.getOne(req.params.courseId).lean();
+    res.render('courses/edit', { title: 'Edit Page', course });
+});
+
+courseController.post('/:courseId/edit', async (req, res) => {
+    const courseId = req.params.courseId;
+    const courseData = req.body;
+    await courseService.edit(courseId, courseData);
+    res.redirect(`/courses/${courseId}/details`);
+})
+
 async function isCourseOwner(req, res, next) {
     const course = await courseService.getOne(req.params.courseId);
 
-    if (course.owner == req.user?._id){
+    if (course.owner == req.user?._id) {
         return next();
     }
 

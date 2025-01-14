@@ -25,5 +25,8 @@ export const courseService = {
     },
     remove(courseId) {
         return Course.findByIdAndDelete(courseId);
+    },
+    edit(courseId, courseData) {
+        return Course.findByIdAndUpdate(courseId, courseData);
     }
 };
