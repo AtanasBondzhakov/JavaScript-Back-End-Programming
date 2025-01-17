@@ -5,7 +5,7 @@ import routes from '../routes.js';
 import { authMiddleware } from '../middlewares/authMIddleware.js';
 
 export default function expressInit(app) {
-    app.use('/static', express.static('src/public'));
+    app.use(express.static('src/public'));
     app.use(urlencoded({ extended: false }));
     app.use(cookieParser());
     app.use(authMiddleware);
