@@ -1,67 +1,37 @@
-main {
-    padding-top: 50px;
+.loginPage {
+  text-align: center;
+  margin-top: 5px;
+  position: relative;
+  padding-bottom: 6px;
 }
 
-.login-box {
-    color: white;
-    width: 360px;
-    height: 330px;
-    margin: auto;
-    background-color: #dbd1c1;
-    border: 2px solid black;
-    border-radius: 20px;
-    color: black;
+#loginForm {
+  padding-top: 1%;
+  display: inline-block;
+  margin-top: 5%;
+  background: rgba(0, 0, 0, 0.703);
+  width: 40%;
+  border: 1px solid white;
+  border-radius: 20px;
 }
 
-.login-box h1 {
-    text-align: center;
-    padding-top: 15px;
+#loginForm label {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: white;
+  font-weight: bold;
 }
 
-h4 {
-    margin-top: 10px;
-    text-align: center;
+#loginForm input {
+  background: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-size: 16px;
 }
 
-form {
-    width: 300px;
-    margin-left: 20px;
-}
-
-form label {
-    display: flex;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    font-size: 18px;
-}
-
-form input {
-    width: 320px;
-    height: 30px;
-    padding-left: 7px;
-    border: none;
-    border: 1px solid gray;
-    border-radius: 8px;
-    outline: none;
-}
-
-input[type="submit"] {
-    width: 320px;
-    height: 35px;
-    margin-top: 20px;
-    border: none;
-    background-color: #D1491C;
-    color: white;
-    font-size: 15px;
-}
-
-.login-box p {
-    text-align: center;
-    padding-top: 20px;
-    font-size: 15px;
-
-}
-
-.login-box p>a {
-    color: #D1491C;
+#loginForm input[type="submit"] {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 40%;
+  font-size: 20px;
 }

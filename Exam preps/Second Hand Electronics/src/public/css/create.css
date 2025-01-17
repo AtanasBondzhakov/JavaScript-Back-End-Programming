@@ -1,99 +1,43 @@
-main {
-    padding-top: 20px;
+#createPage {
+  text-align: center;
+  margin-top: 5px;
+  position: relative;
 }
 
-#create-container {
-    color: white;
-    width: 360px;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 30px;
-    background-color: #dbd1c1;
-    border: 2px solid black;
-    border-radius: 20px;
-    color: black;
+#createForm {
+  padding-top: 1%;
+  display: inline-block;
+  margin-top: 2%;
+  margin-bottom: 4%;
+  background: rgba(0, 0, 0, 0.703);
+  width: 40%;
+  border: 1px solid white;
+  border-radius: 20px;
 }
 
-#create-container h1 {
-    text-align: center;
-    padding-top: 15px;
-    color: black;
-
+#createForm label {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: white;
+  font-weight: bold;
 }
 
-#create-container h4 {
-    margin-top: 10px;
-    text-align: center;
-    color: #ff960b;
+#createForm input {
+  background: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-size: 16px;
 }
 
-#create-container form {
-    width: 300px;
-    margin-left: 20px;
+#createForm input[type="submit"] {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  width: 40%;
+  font-size: 20px;
 }
 
-#create-container form label {
-    display: flex;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    font-size: 18px;
-}
-
-#create-container form input {
-    width: 320px;
-    height: 30px;
-    padding-left: 7px;
-    border: none;
-    border: 1px solid gray;
-    border-radius: 8px;
-    outline: none;
-    background-color: whitesmoke;
-}
-
-#create-container input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-#create-container input[type=number] {
-    -moz-appearance: textfield;
-}
-
-#create-container form textarea {
-    width: 320px;
-    height: 80px;
-    padding-left: 7px;
-    border: none;
-    border: 1px solid gray;
-    border-radius: 8px;
-    outline: none;
-    background-color: whitesmoke;
-    resize: none;
-}
-
-#create-container select {
-    outline: 0;
-    border: 0;
-    box-shadow: none;
-    flex: 1;
-    padding: 0 1em;
-    cursor: pointer;
-    height: 20px;
-    font-weight: bold;
-    border-radius: 20px;
-    width: 320px;
-    color: black;
-    background-color: whitesmoke;
-}
-
-#create-container input[type="submit"] {
-    width: 320px;
-    height: 35px;
-    margin-top: 20px;
-    border: none;
-    background-color: #D1491C;
-    color: white;
-    font-size: 15px;
-    margin-bottom: 30px;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
