@@ -11,19 +11,17 @@ authController.get('/register', (req, res) => {
 });
 
 authController.post('/register', async (req, res) => {
-    const { username, email, password, rePassword } = req.body;
+    const { email, username, password, rePassword } = req.body;
 
     try {
-        const token = await authService.register(username, email, password, rePassword);
+        const token = await authService.register(email, username, password, rePassword);
 
         res.cookie(AUTH_COOKIE_NAME, token, { httpOnly: true });
 
         res.redirect('/');
-
-        //TODO error handling
     } catch (err) {
         const error = getErrorMessage(err);
-        res.render('auth/register', { title: 'Register Page', username, email, error });
+        res.render('auth/register', { title: 'Register Page', email, username, error });
     }
 });
 
@@ -40,13 +38,10 @@ authController.post('/login', async (req, res) => {
         res.cookie(AUTH_COOKIE_NAME, token, { httpOnly: true });
 
         res.redirect('/');
-
-        //TODO error handling
     } catch (err) {
         const error = getErrorMessage(err);
         res.render('auth/login', { title: 'Login Page', email, error });
     }
-
 });
 
 authController.get('/logout', (req, res) => {
