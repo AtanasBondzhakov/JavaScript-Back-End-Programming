@@ -3,46 +3,43 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Second Hand Electronics</title>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
-    <header class="header">
-        <nav>
-            <img src="/static/images/logo.avif" class="logo">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="#">Search</a></li>
-                <li><a href="#">All Volcanoes</a></li>
-                {{#if isAuthenticated}}
-                <li><a href="#">Create Volcano Wiki</a></li>
-                <li><a href="/auth/logout">Logout</a></li>
-                {{else}}
-                <li><a href="/auth/login">Login</a></li>
-                <li><a href="/auth/register">Register</a></li>
-                {{/if}}
-            </ul>
-        </nav>
-    </header>
+    <!-- In case of error, you should display div with class "errorContainer" -->
+    <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
 
-    <main>
-        {{#if error}}
-        <div>
-            <div class="errorContainer">
-                <p>{{error}}</p>
-            </div>
+    <!-- <div>
+        <div class="errorContainer">
+            <p>Error</p>
         </div>
-        {{/if}}
+    </div> -->
+
+    <div id="container">
+
+        <nav>
+            <ul>
+                <!--For all users-->
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Catalog</a></li>
+                <!--For loggin users-->
+                <li><a href="#">Create Offer</a></li>
+                <li><a href="#">Search</a></li>
+                <li><a href="#">Logout</a></li>
+                <!--For guest user-->
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Register</a></li>
+
+            </ul>
+
+        </nav>
 
         {{{body}}}
-    </main>
 
-    <footer>
-        <p>&copy JS Back-End 2024</p>
-    </footer>
+        <footer>@SoftUni - JS Back-End - Second Hand Electronics 2023</footer>
+    </div>
 
 </body>
 
