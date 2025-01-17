@@ -6,18 +6,18 @@ import User from "../models/User.js";
 
 
 export const authService = {
-    async register(username, email, password, rePassword) {
+    async register(email, username, password, rePassword) {
 
         if (password !== rePassword) {
             throw new Error('Passwords don\'t match!');
         }
-        const user = await User.findOne({ $or: [{ username }, { email }] });
+        const user = await User.findOne({ $or: [{ email }, { username }] });
 
         if (user) {
             throw new Error('User already exist!');
         }
 
-        const newUser = await User.create({ username, email, password });
+        const newUser = await User.create({ email, username, password });
 
         return this.generateToken(newUser);
 

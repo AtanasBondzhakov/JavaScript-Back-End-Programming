@@ -8,11 +8,13 @@
 </head>
 
 <body>
+    {{#if error}}
     <div>
         <div class="errorContainer">
             <p>{{error}}</p>
         </div>
     </div>
+    {{/if}}
 
     <div id="container">
 
@@ -28,7 +30,7 @@
                 <li><a href="#">Logout</a></li>
                 <!--For guest user-->
                 {{else}}
-                <li><a href="#">Login</a></li>
+                <li><a href="/auth/login">Login</a></li>
                 <li><a href="/auth/register">Register</a></li>
                 {{/if}}
             </ul>
