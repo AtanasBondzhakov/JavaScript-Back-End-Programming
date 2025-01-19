@@ -18,5 +18,14 @@ export const electronicService = {
     },
     edit(electronicId, electronicData) {
         return Electronic.findByIdAndUpdate(electronicId, electronicData, { runValidators: true });
+    },
+    search(query) {
+        if (query.searchName) {
+            return Electronic.find({ name: { $regex: query.searchName, $options: 'i' } }).lean();
+        }
+
+        if (query.searchType) {
+            return Electronic.find({ type: { $regex: query.searchType, $options: 'i' } }).lean();
+        }
     }
 }

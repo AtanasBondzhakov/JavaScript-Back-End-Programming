@@ -95,6 +95,22 @@ electronicController.post('/:electronicId/edit', isElectronicOwner, async (req, 
     }
 });
 
+electronicController.get('/search', async (req, res) => {
+    const query = req.query;
+
+    try {
+        let electronics = await electronicService.search(query);
+
+        if (electronics === undefined) {
+            electronics = await electronicService.getAll().lean();
+        }
+
+        res.render('electronics/search', { title: 'Search Page', electronics });
+    } catch (err) {
+        res.render('electronics/search', { title: 'Search Page', error: getErrorMessage(err) });
+    }
+});
+
 async function isElectronicOwner(req, res, next) {
     const electronic = await electronicService.getOne(req.params.electronicId);
 
