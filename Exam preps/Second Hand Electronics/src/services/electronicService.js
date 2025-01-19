@@ -6,5 +6,8 @@ export const electronicService = {
     },
     getAll() {
         return Electronic.find();
+    },
+    getOne(electronicId) {
+        return Electronic.findById(electronicId);
     }
 }

@@ -31,4 +31,11 @@ electronicController.get('/catalog', async (req, res) => {
     }
 });
 
+electronicController.get('/:electronicId/details', async (req, res) => {
+    const electronicId = req.params.electronicId;
+    const electronic = await electronicService.getOne(electronicId).lean();
+
+    res.render('electronics/details', { title: 'Details Page', electronic });
+});
+
 export default electronicController;
