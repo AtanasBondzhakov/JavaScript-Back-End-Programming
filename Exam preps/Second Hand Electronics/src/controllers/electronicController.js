@@ -18,7 +18,7 @@ electronicController.post('/create', isAuth, async (req, res) => {
 
         res.redirect('/electronics/catalog');
     } catch (err) {
-        res.render('electronics/create', { title: 'Create Page', error: getErrorMessage(err) });
+        res.render('electronics/create', { title: 'Create Page', error: getErrorMessage(err), electronic: electronicData });
     }
 });
 
