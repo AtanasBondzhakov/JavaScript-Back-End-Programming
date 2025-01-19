@@ -33,9 +33,23 @@ electronicController.get('/catalog', async (req, res) => {
 
 electronicController.get('/:electronicId/details', async (req, res) => {
     const electronicId = req.params.electronicId;
-    const electronic = await electronicService.getOne(electronicId).lean();
+    const userId = req.user?._id;
 
-    res.render('electronics/details', { title: 'Details Page', electronic });
+    try {
+        const electronic = await electronicService.getOne(electronicId).lean();
+        const isOwner = await isElectronicOwner(electronicId, userId);
+        const isBought = electronic.buyingList.some(user => user._id == userId);
+
+        res.render('electronics/details', { title: 'Details Page', electronic, isOwner, isBought });
+    } catch (err) {
+        res.render('electronics/details', { title: 'Details Page', error: getErrorMessage(err) });
+    }
 });
+
+async function isElectronicOwner(electronicId, userId) {
+    const electronic = await electronicService.getOne(electronicId);
+
+    return electronic.owner == userId;
+}
 
 export default electronicController;
