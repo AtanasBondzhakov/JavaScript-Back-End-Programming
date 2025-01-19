@@ -46,6 +46,19 @@ electronicController.get('/:electronicId/details', async (req, res) => {
     }
 });
 
+electronicController.get('/:electronicId/buy', async (req, res) => {
+    const electronicId = req.params.electronicId;
+    const userId = req.user?._id;
+
+    try {
+        await electronicService.buy(electronicId, userId);
+
+        res.redirect(`/electronics/${electronicId}/details`)
+    } catch (err) {
+        res.render('electronics/details', { title: 'Details Page', error: getErrorMessage(err) });
+    }
+});
+
 async function isElectronicOwner(electronicId, userId) {
     const electronic = await electronicService.getOne(electronicId);
 
