@@ -1,21 +1,22 @@
 import { Router } from "express";
 import { electronicService } from "../services/electronicService.js";
 import { getErrorMessage } from "../utils/errorUtils.js";
+import { isAuth } from "../middlewares/authMIddleware.js";
 
 const electronicController = Router();
 
-electronicController.get('/create', (req, res) => {
+electronicController.get('/create', isAuth, (req, res) => {
     res.render('electronics/create', { title: 'Create Page' });
 });
 
-electronicController.post('/create', async (req, res) => {
+electronicController.post('/create', isAuth, async (req, res) => {
     const electronicData = req.body;
     const ownerId = req.user?._id;
 
     try {
         await electronicService.create(electronicData, ownerId);
 
-        res.redirect('/electronics/catalog')
+        res.redirect('/electronics/catalog');
     } catch (err) {
         res.render('electronics/create', { title: 'Create Page', error: getErrorMessage(err) });
     }
@@ -37,7 +38,7 @@ electronicController.get('/:electronicId/details', async (req, res) => {
 
     try {
         const electronic = await electronicService.getOne(electronicId).lean();
-        const isOwner = await isElectronicOwner(electronicId, userId);
+        const isOwner = userId == electronic.owner;
         const isBought = electronic.buyingList.some(user => user._id == userId);
 
         res.render('electronics/details', { title: 'Details Page', electronic, isOwner, isBought });
@@ -46,23 +47,38 @@ electronicController.get('/:electronicId/details', async (req, res) => {
     }
 });
 
-electronicController.get('/:electronicId/buy', async (req, res) => {
+electronicController.get('/:electronicId/buy', isAuth, async (req, res) => {
     const electronicId = req.params.electronicId;
     const userId = req.user?._id;
 
     try {
         await electronicService.buy(electronicId, userId);
 
-        res.redirect(`/electronics/${electronicId}/details`)
+        res.redirect(`/electronics/${electronicId}/details`);
     } catch (err) {
         res.render('electronics/details', { title: 'Details Page', error: getErrorMessage(err) });
     }
 });
 
-async function isElectronicOwner(electronicId, userId) {
-    const electronic = await electronicService.getOne(electronicId);
+electronicController.get('/:electronicId/delete', isElectronicOwner, async (req, res) => {
+    try {
+        const electronicId = req.params.electronicId;
 
-    return electronic.owner == userId;
+        await electronicService.remove(electronicId);
+
+        res.redirect('/electronics/catalog');
+    } catch (err) {
+        res.render('electronics/catalog', { title: 'Catalog Page', error: getErrorMessage(err) });
+    }
+});
+
+async function isElectronicOwner(req, res, next) {
+    const electronic = await electronicService.getOne(req.params.electronicId);
+
+    if (electronic.owner == req.user?._id) {
+        return next();
+    }
+    res.redirect('/404');
 }
 
 export default electronicController;

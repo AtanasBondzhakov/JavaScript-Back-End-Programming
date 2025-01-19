@@ -12,5 +12,8 @@ export const electronicService = {
     },
     buy(electronicId, userId) {
         return Electronic.findByIdAndUpdate(electronicId, { $push: { buyingList: userId } });
+    },
+    remove(electronicId) {
+        return Electronic.findByIdAndDelete(electronicId);
     }
 }
