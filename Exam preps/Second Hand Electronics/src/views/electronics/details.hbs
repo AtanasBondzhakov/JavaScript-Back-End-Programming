@@ -17,7 +17,7 @@
         <div class="buttons">
 
             {{#if isOwner}}
-            <a href="#" class="edit-btn">Edit</a>
+            <a href="/electronics/{{electronic._id}}/edit" class="edit-btn">Edit</a>
             <a href="/electronics/{{electronic._id}}/delete" class="delete-btn">Delete</a>
             {{else}}
             {{#if isBought}}

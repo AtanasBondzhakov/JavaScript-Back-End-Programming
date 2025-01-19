@@ -72,6 +72,29 @@ electronicController.get('/:electronicId/delete', isElectronicOwner, async (req,
     }
 });
 
+electronicController.get('/:electronicId/edit', isElectronicOwner, async (req, res) => {
+    try {
+        const electronic = await electronicService.getOne(req.params.electronicId).lean();
+
+        res.render('electronics/edit', { title: 'Edit Page', electronic });
+    } catch (err) {
+        res.render('electronics/details', { title: 'Details Page', error: getErrorMessage(err) });
+    }
+});
+
+electronicController.post('/:electronicId/edit', isElectronicOwner, async (req, res) => {
+    const electronicId = req.params.electronicId;
+    const electronicData = req.body;
+
+    try {
+        await electronicService.edit(electronicId, electronicData);
+
+        res.redirect(`/electronics/${electronicId}/details`);
+    } catch (err) {
+        res.render('electronics/edit', { title: 'Edit Page', error: getErrorMessage(err), electronic: electronicData });
+    }
+});
+
 async function isElectronicOwner(req, res, next) {
     const electronic = await electronicService.getOne(req.params.electronicId);
 

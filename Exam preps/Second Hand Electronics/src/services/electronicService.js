@@ -15,5 +15,8 @@ export const electronicService = {
     },
     remove(electronicId) {
         return Electronic.findByIdAndDelete(electronicId);
+    },
+    edit(electronicId, electronicData) {
+        return Electronic.findByIdAndUpdate(electronicId, electronicData, { runValidators: true });
     }
 }
