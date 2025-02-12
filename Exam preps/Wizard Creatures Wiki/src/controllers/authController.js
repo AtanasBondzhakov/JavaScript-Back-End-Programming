@@ -31,7 +31,6 @@ authController.get('/login', (req, res) => {
 });
 
 authController.post('/login', async (req, res) => {
-    //TODO Modify userdata
     const { email, password } = req.body;
 
     try {
@@ -40,13 +39,10 @@ authController.post('/login', async (req, res) => {
         res.cookie(AUTH_COOKIE_NAME, token, { httpOnly: true });
 
         res.redirect('/');
-
-        //TODO error handling
     } catch (err) {
         const error = getErrorMessage(err);
         res.render('auth/login', { title: 'Login Page', email, error });
     }
-
 });
 
 authController.get('/logout', isAuth, (req, res) => {
