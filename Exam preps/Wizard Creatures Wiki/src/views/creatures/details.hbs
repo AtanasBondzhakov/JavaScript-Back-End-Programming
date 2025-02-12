@@ -18,7 +18,7 @@
                 <div class="social-btn">
                     {{#if isOwner}}
                     <a href="#" class="edit-btn">Edit</a>
-                    <a href="#" class="del-btn">Delete</a>
+                    <a href="/creatures/{{creature._id}}/delete" class="del-btn">Delete</a>
                     {{else}}
                     {{#if hasVoted}}
                     <p class="thanks-for-vote">Thanks For Voting</p>

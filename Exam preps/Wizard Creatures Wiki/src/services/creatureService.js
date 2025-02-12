@@ -13,11 +13,14 @@ const vote = async (creatureId, userId) => Creature.findByIdAndUpdate(creatureId
 
 const getUser = (userId) => User.findById(userId);
 
+const remove = (creatureId) => Creature.findByIdAndDelete(creatureId);
+
 export default {
     getAll,
     create,
     getOne,
     getOwner,
     vote,
-    getUser
+    getUser,
+    remove
 }

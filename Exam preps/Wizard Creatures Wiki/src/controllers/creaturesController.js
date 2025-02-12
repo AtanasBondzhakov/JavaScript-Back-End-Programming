@@ -2,6 +2,7 @@ import { Router } from "express";
 import creatureService from "../services/creatureService.js";
 import { getErrorMessage } from "../utils/errorUtils.js";
 import { isAuth } from "../middlewares/authMIddleware.js";
+import { createConnection } from "mongoose";
 
 const creatureController = Router();
 
@@ -74,11 +75,24 @@ creatureController.get('/:creatureId/vote-up', isAuth, async (req, res) => {
     }
 });
 
-async function isCreator(req, res, next) {
+creatureController.get('/:creatureId/delete', isCreatureCreator, async (req, res) => {
+    const creatureId = req.params.creatureId;
+
+    try {
+        await creatureService.remove(creatureId);
+
+        res.redirect('/creatures/all-posts');
+    } catch (err) {
+        res.render('creatures/all-posts', { title: 'Catalog Page', error: getErrorMessage(err) });
+    }
+});
+
+
+async function isCreatureCreator(req, res, next) {
     const creature = await creatureService.getOne(req.params.creatureId);
-    if(creature.owner == req.user?._id) {
+    if (creature.owner == req.user?._id) {
         return next();
-    } 
+    }
 
     res.redirect('/404');
 }
