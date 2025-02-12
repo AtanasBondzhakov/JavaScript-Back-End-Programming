@@ -4,24 +4,23 @@ import jwt from '../lib/jwt.js';
 import User from "../models/User.js";
 
 export const authService = {
-     //TODO Modify userdata
-    async register(username, email, password, rePassword) {
+    async register(firstName, lastName, email, password, rePassword) {
 
         if (password !== rePassword) {
             throw new Error('Passwords mismatch!');
         }
-        const user = await User.findOne({ $or: [{ username }, { email }] });
+        const user = await User.findOne({ $or: [{ email }] });
 
         if (user) {
             throw new Error('User already exist!');
         }
 
-        const newUser = await User.create({ username, email, password });
+        const newUser = await User.create({ firstName, lastName, email, password });
 
         return this.generateToken(newUser);
     },
     async login(email, password) {
-         //TODO Modify userdata
+        //TODO Modify userdata
         const user = await User.findOne({ email });
 
         if (!user) {
