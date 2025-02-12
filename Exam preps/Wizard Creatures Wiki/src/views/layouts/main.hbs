@@ -3,46 +3,52 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Home Page</title>
+
+    <!-- Do not forget to change the path to the css file -->
+    <link href="/static/css/style.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
-    <header class="header">
+
+
+    <div id="box">
+
+        <!-- In case of error, you should display div with class "error-container" -->
+        <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
+        <!--
+        <div class="error-container">
+            <p>Error</p>
+        </div>-->
+
+
         <nav>
-            <img src="/static/images/logo.avif" class="logo">
-            <ul>
+            <!-- Do not forget to change the path to the image -->
+            <img src="/static/img/logo.png" alt="logo">
+
+            <ul class="menu">
                 <li><a href="/">Home</a></li>
-                <li><a href="#">Search</a></li>
-                <li><a href="#">All Volcanoes</a></li>
-                {{#if isAuthenticated}}
-                <li><a href="#">Create Volcano Wiki</a></li>
+                <li><a href="#">All Posts</a></li>
+                <!-- Logged users -->
+                <li><a href="#">Create Post</a></li>
+                <li><a href="#">Profile</a></li>
                 <li><a href="/auth/logout">Logout</a></li>
-                {{else}}
-                <li><a href="/auth/login">Login</a></li>
+                <!-- Guest users -->
                 <li><a href="/auth/register">Register</a></li>
-                {{/if}}
+                <li><a href="/auth/login">Login</a></li>
             </ul>
+
         </nav>
-    </header>
 
-    <main>
-        {{#if error}}
-        <div>
-            <div class="errorContainer">
-                <p>{{error}}</p>
-            </div>
-        </div>
-        {{/if}}
+        <main>
+            {{{body}}}
+        </main>
 
-        {{{body}}}
-    </main>
 
-    <footer>
-        <p>&copy JS Back-End 2024</p>
-    </footer>
+        <footer>
+            © JS Back-End Exam 2023
+        </footer>
+    </div>
 
 </body>
 
