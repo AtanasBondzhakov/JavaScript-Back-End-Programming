@@ -32,4 +32,33 @@ creatureController.post('/create', isAuth, async (req, res) => {
     }
 });
 
+creatureController.get('/:creatureId/details', async (req, res) => {
+    const creatureId = req.params.creatureId;
+
+    try {
+        const creature = await creatureService.getOne(creatureId).lean();
+        const owner = await creatureService.getOwner(creature.owner);
+
+        const isOwner = req.user?._id == creature.owner;
+        const hasVoted = creature.votes.some(user => user._id == req.user?._id);
+
+        const votesList = await Promise.all(creature.votes.map(async userId => {
+            const user = await creatureService.getUser(userId);
+            return user.email;
+        }))
+
+        res.render('creatures/details', {
+            title: 'Details Page',
+            creature,
+            owner: `${owner.firstName} ${owner.lastName}`,
+            isOwner,
+            hasVoted,
+            votesList: votesList.join(', '),
+            votesCount: votesList.length
+        });
+    } catch (err) {
+        res.render('creatures/all-posts', { title: 'Catalog Page', error: getErrorMessage(err) });
+    }
+});
+
 export default creatureController;
