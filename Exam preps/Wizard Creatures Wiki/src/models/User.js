@@ -1,14 +1,16 @@
 import { Schema, model } from "mongoose";
 import bcrypt from 'bcrypt';
 
-//TODO Modify schema
-
 const SALT_ROUNDS = 10;
 
 const userSchema = new Schema({
-    username: {
+    firstName: {
         type: String,
-        required: [true, 'Username is required!']
+        required: [true, 'First name is required']
+    },
+    lastName: {
+        type: String,
+        required: [true, 'Last name is required!']
     },
     email: {
         type: String,
