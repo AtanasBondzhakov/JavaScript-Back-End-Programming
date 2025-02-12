@@ -11,6 +11,8 @@ const getOne = (creatureId) => Creature.findById(creatureId);
 
 const getOwner = (ownerId) => User.findById(ownerId);
 
+const vote = async (creatureId, userId) => Creature.findByIdAndUpdate(creatureId, {$push: {votes: userId}});
+
 const getUser = (userId) => User.findById(userId);
 
 export default {

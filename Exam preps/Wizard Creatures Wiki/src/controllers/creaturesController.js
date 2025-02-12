@@ -61,4 +61,17 @@ creatureController.get('/:creatureId/details', async (req, res) => {
     }
 });
 
+creatureController.get('/:creatureId/vote-up', async (req, res) => {
+    const creatureId = req.params.creatureId;
+    const userId = req.user?._id;
+
+    try {
+        await creatureService.vote(creatureId, userId);
+
+        res.redirect(`/creatures/${creatureId}/details`);
+    } catch (err) {
+        res.render('creatures/all-posts', { title: 'Catalog Page', error: getErrorMessage(err) });
+    }
+});
+
 export default creatureController;
