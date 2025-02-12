@@ -1,144 +1,101 @@
-@import url("https://fonts.googleapis.com/css2?family=Madimi+One&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Madimi One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+.home-container {
+    display: flex;
+    top: 0%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
 }
 
-body {
-  width: 100%;
-  background-image: url(../images/background.webp);
-  background-position: center;
-  background-size: cover;
-  color: #fff;
+.short-info {
+    justify-items: legacy;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: 1;
+    margin-top: 2em;
+    padding: 3em;
+    width: 100%;
+    height: 30%;
+    background-color: #22333B;
+    border-radius: 50px;
 }
 
-nav {
-  width: 100%;
-  padding: 2px 0;
-  display: flex;
-  align-items: center;
-  background-color: #dbd1c1;
+.short-info>h1 {
+    text-transform: capitalize;
+    font-size: 3.7rem;
+    font-weight: 600;
+    line-height: 1.1;
+    color: #ffffff !important;
+    font-family: Ubuntu, sans-serif !important;
+    pointer-events: auto;
+    word-wrap: break-word;
+    position: relative;
+    font-weight: bold;
+    word-wrap: break-word;
+    padding-left: 1em;
+    margin-bottom: 15px;
 }
 
-.logo {
-  width: 50px;
-  cursor: pointer;
+.short-info>h2 {
+    text-transform: capitalize;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.1;
+    color: #fffefe !important;
+    font-family: Ubuntu, sans-serif !important;
+    pointer-events: auto;
+    word-wrap: break-word;
+    position: relative;
+    font-weight: bold;
+    word-wrap: break-word;
+    padding-left: 1em;
 }
 
-nav ul {
-  flex: 1;
+#home-page {
+    display: block;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 0;
+    margin-top: 4em;
+    margin-left: 0%;
+    margin-right: 0%;
+    min-height: 350px;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
 }
 
-nav ul li {
-  display: inline-block;
-  margin: 10px 20px;
-}
-
-nav ul li a {
-  color: black;
-  text-decoration: none;
-}
-
-.content {
-  margin-top: 5%;
-}
-
-.content h1 {
-  font-size: 88px;
-  margin-bottom: 15px;
-  text-align: center;
-  color: black;
-  margin-left: 100px;
-  margin-right: 100px;
-}
-
-.content p {
-  line-height: 22px;
-  font-size: 14px;
-  text-align: center;
-  margin-left: 300px;
-  margin-right: 300px;
-}
-
-.content .catalog {
-  display: inline-block;
-  margin-top: 30px;
-  margin-left: 45%;
-  background: #dbd1c1;
-  color: #fff;
-  text-decoration: none;
-  padding: 15px 30px;
-  border-radius: 30px;
-  color: black;
-  font-weight: bold;
-}
-
-footer p {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #dbd1c1;
-  color: black;
-  font-weight: bolder;
-  text-align: center;
-}
-
-.errorContainer {
-  position: fixed;
-  margin-top:30px;
-  right: 100px;
-  min-width: 100px;
-  display: block;
-  z-index: 11111;
-  top: 55px;
-  text-align: center;
-  border-radius: 20px;
-  color: rgb(255, 255, 255);
-  height: auto;
-  width: 320px;
-  box-shadow: 0 5px 10px #dbd1c1;
-}
-
-.errorContainer > p {
-  background: #D1491C;
-  font-size: 20px;
-  padding: 20px;
-  height: auto;
-  border-radius: 20px;
-}
-
-.errorContainer {
-  -moz-animation: cssAnimation 0s ease-in 2s forwards;
-  /* Firefox */
-  -webkit-animation: cssAnimation 0s ease-in 2s forwards;
-  /* Safari and Chrome */
-  -o-animation: cssAnimation 0s ease-in 2s forwards;
-  /* Opera */
-  animation: cssAnimation 0s ease-in 2s forwards;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-}
-
-@keyframes cssAnimation {
-  to {
-    width: 0;
-    height: 0;
-    overflow: hidden;
+#home-page>h1 {
+    font-size: 2.4rem;
+    position: relative;
+    font-weight: 700;
+    line-height: 1.1;
     padding: 0;
-  }
+    letter-spacing: 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(234, 236, 250);
+    margin-top: 50px;
+    font-size: 4.5rem;
+    font-family: "Playfair Display", serif
 }
 
-@-webkit-keyframes cssAnimation {
-  to {
-    width: 0;
-    height: 0;
-    visibility: hidden;
-    padding: 0;
-  }
+.offers {
+    font-size: 0;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container {
+    margin-top: 15px;
+    box-shadow: 0px 3px 8px 5px white;
+    height: 100%;
+}
+
+.container>img {
+    display: inline-block;
+    border: 2px solid rgb(253, 251, 251);
+    height: 250px;
+    width: 330px;
+    max-width: 100%;
 }
