@@ -87,6 +87,28 @@ creatureController.get('/:creatureId/delete', isCreatureCreator, async (req, res
     }
 });
 
+creatureController.get('/:creatureId/edit', isCreatureCreator, async (req, res) => {
+    try {
+        const creature = await creatureService.getOne(req.params.creatureId).lean();
+
+        res.render('creatures/edit', { title: 'Edit Page', creature });
+    } catch (err) {
+        res.render('creatures/all-posts', { title: 'Catalog Page', error: getErrorMessage(err) });
+    }
+});
+
+creatureController.post('/:creatureId/edit', isCreatureCreator, async (req, res) => {
+    const creatureId = req.params.creatureId;
+    const creatureData = req.body;
+
+    try {
+        await creatureService.edit(creatureId, creatureData);
+
+        res.redirect(`/creatures/${creatureId}/details`);
+    } catch (err) {
+        res.render('creatures/edit', {title: 'Edit Page', error: getErrorMessage(err), creature: creatureData});
+    }
+});
 
 async function isCreatureCreator(req, res, next) {
     const creature = await creatureService.getOne(req.params.creatureId);
