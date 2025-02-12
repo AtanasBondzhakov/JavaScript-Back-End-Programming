@@ -74,4 +74,13 @@ creatureController.get('/:creatureId/vote-up', isAuth, async (req, res) => {
     }
 });
 
+async function isCreator(req, res, next) {
+    const creature = await creatureService.getOne(req.params.creatureId);
+    if(creature.owner == req.user?._id) {
+        return next();
+    } 
+
+    res.redirect('/404');
+}
+
 export default creatureController;
