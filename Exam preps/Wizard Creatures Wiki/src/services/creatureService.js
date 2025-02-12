@@ -3,15 +3,13 @@ import User from "../models/User.js";
 
 const getAll = () => Creature.find();
 
-const create = (creatureData, ownerId) => {
-    return Creature.create({ ...creatureData, owner: ownerId });
-}
+const create = (creatureData, ownerId) => Creature.create({ ...creatureData, owner: ownerId });
 
 const getOne = (creatureId) => Creature.findById(creatureId);
 
 const getOwner = (ownerId) => User.findById(ownerId);
 
-const vote = async (creatureId, userId) => Creature.findByIdAndUpdate(creatureId, {$push: {votes: userId}});
+const vote = async (creatureId, userId) => Creature.findByIdAndUpdate(creatureId, { $push: { votes: userId } });
 
 const getUser = (userId) => User.findById(userId);
 
@@ -21,6 +19,5 @@ export default {
     getOne,
     getOwner,
     vote,
-    // getVoted,
     getUser
 }

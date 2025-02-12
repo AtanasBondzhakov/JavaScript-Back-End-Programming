@@ -61,7 +61,7 @@ creatureController.get('/:creatureId/details', async (req, res) => {
     }
 });
 
-creatureController.get('/:creatureId/vote-up', async (req, res) => {
+creatureController.get('/:creatureId/vote-up', isAuth, async (req, res) => {
     const creatureId = req.params.creatureId;
     const userId = req.user?._id;
 
