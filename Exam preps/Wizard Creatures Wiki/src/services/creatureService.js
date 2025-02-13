@@ -15,7 +15,9 @@ const getUser = (userId) => User.findById(userId);
 
 const remove = (creatureId) => Creature.findByIdAndDelete(creatureId);
 
-const edit = (creatureId, creatureData) => Creature.findByIdAndUpdate(creatureId, creatureData, {runValidators: true});
+const edit = (creatureId, creatureData) => Creature.findByIdAndUpdate(creatureId, creatureData, { runValidators: true });
+
+const getMyPosts = (userId) => Creature.find({ owner: userId });
 
 export default {
     getAll,
@@ -25,5 +27,6 @@ export default {
     vote,
     getUser,
     remove,
-    edit
+    edit,
+    getMyPosts
 }
